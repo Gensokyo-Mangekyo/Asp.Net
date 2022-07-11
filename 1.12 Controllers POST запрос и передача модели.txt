@@ -1,0 +1,92 @@
+//Существуют различные способы передачи данных из контроллера в представление:
+
+//ViewData ViewData["ключ"] = "значние"; в Razor <h2>@ViewData["Title"]</h2>
+
+//ViewBag ViewBag.Message = "Hello"; В razor  <h2>@ViewBag.Title</h2>
+
+//Для того чтобы дать понять что в представление есть модель используем @model @model Asp.Net.Models.название модели
+//Использование модели @Model 
+
+//Модель
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Asp.Net.Models //Папку models создаём обязательно
+{
+    public class Person
+    {
+        public string name { get; set; }
+        public int age { get; set; }
+    }
+}
+
+//HomeController
+
+using Asp.Net.Models;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Asp.Net.Controllers
+{
+    public class HomeController : Controller
+    {
+
+        public ViewResult Index()
+        {
+
+            return View();
+        }
+
+        [HttpPost] //HttpPost нужен для post запросов
+        public ViewResult Index(Person pers) //обычный string name,string age
+        {
+            ViewBag.Messeage = "Marisa"; 
+            return View("Marisa", pers); //Обратим внимание что не нужен метод обработки представления Marisa
+        }
+
+    }
+
+}
+
+//Index.cshtml
+
+@{
+    Layout = null;
+}
+<!doctype html>
+<html>
+<head>
+    <title>Gensokyo</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <form method="post">
+        <input name="name" placeholder="Ввод имени" />
+        <input name="age" placeholder="Ввод возраста" />
+        <input type="submit" />
+    </form>
+</body>
+</html>
+
+//Marisa.cshtml
+
+@model Asp.Net.Models.Person
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Marisa</title>
+</head>
+
+<body>
+    <h1>Hello @ViewBag.Messeage</h1>
+    <h2>Имя: @Model.name Возраcт @Model.age</h2>
+
+</body>
+</html>
+
+
