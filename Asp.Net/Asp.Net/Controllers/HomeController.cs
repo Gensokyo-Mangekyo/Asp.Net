@@ -1,35 +1,72 @@
-﻿using Asp.Net.Models;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Asp.Net.Controllers
 {
     public class HomeController : Controller
     {
-
-        public ViewResult Index()
+        //Типы файлов
+        //Весь список приведён рядом с папкой проекта
+        //application/msword -> .doc
+        //application/vnd.openxmlformats-officedocument.wordprocessingml.document -> .docx
+        //application/pdf -> pdf
+        //application/octet-stream -> rar
+        //image/png -> png
+        //video/x-flv -> flv
+        //text/plain -> txt
+        //video/mp4 -> mp4
+        //audio/mpeg -> mp3
+        //image/jpeg -> jpg, jpeg
+        //application/zip -> zip,rar
+        [Route("getpng")]
+        public IActionResult GetPng()
         {
-
-            return View();
+            return PhysicalFile(Path.Combine(Directory.GetCurrentDirectory(), "Files/rem.PNG"), "image/png");
         }
 
-        [HttpPost] //HttpPost нужен для post запросов
-        public ViewResult Index(Person pers) //обычный string name,string age
+        [Route("rar")]
+        public IActionResult GetRar()
         {
-            ViewBag.Messeage = "Marisa"; 
-            return View("Marisa", pers); //Обратим внимание что не нужен метод обработки представления Marisa
+            return PhysicalFile(Path.Combine(Directory.GetCurrentDirectory(), "Files/Open.rar"),"application/zip");
         }
 
+        [Route("txt")]
+        public IActionResult GetTxt()
+        {
+            return File("~/Files/one.txt", "text/plain", "namefile.txt");
+        }
+        
 
+        public IActionResult Index() 
+        {
+            return View(); 
+        }
 
+        [HttpPost]
+        [Route("Upload")]
+        //ВНИМАНИЕ ЕСЛИ У ТЕБЯ ПРИ КНОПКИ ЗАГРУЗКИ ФАЙЛА  приложение останавливается с кодом -1
+        //Поменяй бразуер я сменил с Яндекса на Оперу и у некоторых работает запуск без отладки но мне не помогло это 
+        public string UploadFiles()
+        {
+            IFormFileCollection files = Request.Form.Files; //получает коллекцию загруженных файлов
+            var Path = $"{Directory.GetCurrentDirectory()}/uploads";
+            if (!Directory.Exists(Path))
+                Directory.CreateDirectory(Path);
+            foreach (var file in files)
+            {
+                // путь к папке с полным имегем файла
+                string fullPath = $"{Path}/{file.FileName}";
 
+                // сохраняем файл в папку uploads
+                using (var fileStream = new FileStream(fullPath, FileMode.Create))
+                {
+                    file.CopyTo(fileStream);
+                }
+            }
+            return "Все файлы успешно загруженны на сервер";
 
-
+        }
     }
-
-
-
 }

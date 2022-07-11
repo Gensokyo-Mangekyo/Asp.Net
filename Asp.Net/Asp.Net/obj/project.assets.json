@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\C#\\Web\\Repo\\Asp.Net\\Asp.Net\\Asp.Net.csproj",
+      "projectUniqueName": "C:\\Users\\Администратор\\source\\repos\\Asp.Net\\Asp.Net\\Asp.Net\\Asp.Net.csproj",
       "projectName": "Asp.Net",
-      "projectPath": "F:\\C#\\Web\\Repo\\Asp.Net\\Asp.Net\\Asp.Net.csproj",
+      "projectPath": "C:\\Users\\Администратор\\source\\repos\\Asp.Net\\Asp.Net\\Asp.Net\\Asp.Net.csproj",
       "packagesPath": "C:\\Users\\Администратор\\.nuget\\packages\\",
-      "outputPath": "F:\\C#\\Web\\Repo\\Asp.Net\\Asp.Net\\obj\\",
+      "outputPath": "C:\\Users\\Администратор\\source\\repos\\Asp.Net\\Asp.Net\\Asp.Net\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Администратор\\AppData\\Roaming\\NuGet\\NuGet.Config",
