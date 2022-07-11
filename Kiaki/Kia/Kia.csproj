@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Images\koro_01.jpg" />
+    <None Include="wwwroot\Images\koro_02.jpg" />
+    <None Include="wwwroot\Images\koro_03.jpg" />
+    <None Include="wwwroot\Images\koro_04.jpg" />
+    <None Include="wwwroot\Images\koro_05.jpg" />
+    <None Include="wwwroot\Images\koro_06.jpg" />
+    <None Include="wwwroot\Images\koro_07.jpg" />
+    <None Include="wwwroot\Images\koro_08.jpg" />
+    <None Include="wwwroot\Images\koro_09.jpg" />
+    <None Include="wwwroot\Images\koro_10.jpg" />
+    <None Include="wwwroot\Images\koro_11.jpg" />
+    <None Include="wwwroot\Images\koro_12.jpg" />
+    <None Include="wwwroot\Images\koro_13.jpg" />
+    <None Include="wwwroot\Images\koro_14.jpg" />
+    <None Include="wwwroot\Images\koro_15.jpg" />
+    <None Include="wwwroot\Images\koro_16.jpg" />
+    <None Include="wwwroot\Images\koro_17.jpg" />
+    <None Include="wwwroot\Images\koro_18.jpg" />
+    <None Include="wwwroot\Images\koro_19.jpg" />
+    <None Include="wwwroot\Images\koro_20.jpg" />
+    <None Include="wwwroot\Images\koro_21.jpg" />
+    <None Include="wwwroot\Images\koro_22.jpg" />
+    <None Include="wwwroot\Images\koro_23.jpg" />
+    <None Include="wwwroot\Images\koro_24.jpg" />
+    <None Include="wwwroot\Images\koro_25.jpg" />
+    <None Include="wwwroot\Images\koro_26.jpg" />
+    <None Include="wwwroot\Images\koro_27.jpg" />
+    <None Include="wwwroot\Images\koro_28.jpg" />
+    <None Include="wwwroot\Images\koro_29.jpg" />
+    <None Include="wwwroot\Images\koro_30.jpg" />
+    <None Include="wwwroot\Images\koro_31.jpg" />
+  </ItemGroup>
+
+</Project>
