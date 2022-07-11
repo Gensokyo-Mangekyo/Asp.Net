@@ -1,35 +1,13 @@
-﻿using Asp.Net.Models;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Mvc;
+
 
 namespace Asp.Net.Controllers
 {
     public class HomeController : Controller
     {
-
-        public ViewResult Index()
+        public IActionResult Index() //Интрефейс результата действия
         {
-
-            return View();
+            return View(); //Чисто вернуть представление Index()
         }
-
-        [HttpPost] //HttpPost нужен для post запросов
-        public ViewResult Index(Person pers) //обычный string name,string age
-        {
-            ViewBag.Messeage = "Marisa"; 
-            return View("Marisa", pers); //Обратим внимание что не нужен метод обработки представления Marisa
-        }
-
-
-
-
-
-
     }
-
-
-
 }
