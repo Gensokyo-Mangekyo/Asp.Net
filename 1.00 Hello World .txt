@@ -1,0 +1,105 @@
+//В program.cs будет выглядить следующий код
+ 
+//Asp.Net версия 5
+public class Program
+    {
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
+    }
+
+//Asp.Net версия 6 
+
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+ 
+app.MapGet("/", () => "Hello World!");
+ 
+app.Run();
+
+
+//Изменим следующий код ДЛЯ ЭТОГО ПЕРЕХОДИМ В STARTUP.CS это для asp.net 5
+public class Startup
+    {
+        // This method gets called by the runtime. Use this method to add services to the container.
+        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc(); //Добавялем сервесы mvc
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseRouting();
+
+            app.UseEndpoints(end => end.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}"));
+            //controller=Home значит что название первого запускаемого контроллера начинается на Home обратим внимание что после Home не стоит Controller
+            //Если имя Home то значит должна быть папка которая которая называется этим именем именно там и Asp.Net искать файлы представления а Action
+            //Это первое представление которое контроллер обработает
+        }
+    }
+
+
+//Для asp.net 6 
+
+var builder = WebApplication.CreateBuilder(args);
+ 
+builder.Services.AddControllersWithViews(); // добавляем сервисы MVC
+ 
+var app = builder.Build();
+ 
+// устанавливаем сопоставление маршрутов с контроллерами
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+ 
+app.Run();
+
+
+//Cоздаём папку Controllers и называем его обязательно HomeController делаем это потому что {controller=Home} и НИЧЕГО НЕ МЕНЯЕМ
+
+using Microsoft.AspNetCore.Mvc;
+
+namespace Asp.Net.Controllers
+{
+    public class HomeController : Controller
+    {
+        public IActionResult Index() //Интрефейс результата действия
+        {
+            return View(); //Чисто вернуть представление Index()
+        }
+    }
+}
+
+//Cоздаём Views в ней папку Home и потом файл Index.cshtml делаем это потому что {action=Index}
+
+@{
+    Layout = null;
+}
+<!doctype html>
+<html>
+<head>
+    <title>Gensokyo</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h2>Hello World!</h2>
+</body>
+</html>
+
+
+
