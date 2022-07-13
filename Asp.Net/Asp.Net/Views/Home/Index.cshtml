@@ -1,22 +1,7 @@
 ﻿@{
-    Layout = null;
+    ViewBag.Title = "Index";
+    ViewBag.Name = "Chapter Index";
+    ViewBag.Description = "Not description";
+    Layout = "/Views/Shared/_Layout.cshtml";
+
 }
-<!doctype html>
-<html>
-<head>
-    <title>Gensokyo</title>
-    <meta charset="utf-8" />
-</head>
-<body>
-    <a href="/getpng">Скачать png файл </a>
-    <a href="/txt">Скачать txt файл </a>
-    <a href="/rar">Скачать rar файл </a>
-    <h1>Выберите файл для загрузки</h1>
-    <form action="upload" method="post" enctype="multipart/form-data">
-        <input type="file"  /><br>
-        <input type="file"  /><br>
-        <input type="file"  /><br>
-        <input type="submit" value="Загрузить" />
-    </form>
-</body>
-</html>
