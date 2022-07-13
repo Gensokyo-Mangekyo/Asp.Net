@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Files\Open.rar" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 </Project>
