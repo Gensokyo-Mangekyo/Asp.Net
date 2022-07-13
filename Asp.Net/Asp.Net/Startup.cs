@@ -1,27 +1,28 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Asp.Net
 {
     public class Startup
     {
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+       
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc(); //Добавялем сервесы mvc
+            services.AddTransient<ITime, SimpleTime>(); //Подробнее о DI не будем просто знай что есть
+            //AddSingleton->  создаётся один раз (SimpleTime объект) при запуске приложения, и при всех запросах к приложению оно использует один и тот же singleton-объект
+            //AddTransient  создаются каждый раз при вызове
+            //AddScoped создаётся только один на каждый запрос 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseStatusCodePagesWithReExecute("/errorcode", "?code={0}"); //Перенаправление статус кода протокола http ошибки на маршрут
+            //errorcode это первый параметр а второй передаёт параметр контроллеру {0} это код ошибки http протокола
+            env.EnvironmentName = "Gensokyo"; //Теперь вместо генерации исключения и показ ошибки в браузере будет генерироватся http статус 500
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -30,9 +31,7 @@ namespace Asp.Net
             app.UseRouting();
 
             app.UseEndpoints(end => end.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}"));
-            //controller=Home значит что название первого запускаемого контроллера начинается на Home обратим внимание что после Home не стоит Controller
-            //Если имя Home то значит должна быть папка которая которая называется этим именем именно там и Asp.Net искать файлы представления а Action
-            //Это первое представление которое контроллер обработает
+
         }
     }
 }

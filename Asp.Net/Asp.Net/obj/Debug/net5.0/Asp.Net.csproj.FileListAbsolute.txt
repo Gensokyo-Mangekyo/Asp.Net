@@ -67,3 +67,4 @@ C:\Users\Администратор\source\repos\Asp.Net\Asp.Net\Asp.Net\obj\Deb
 C:\Users\Администратор\source\repos\Asp.Net\Asp.Net\Asp.Net\obj\Debug\net5.0\Asp.Net.pdb
 C:\Users\Администратор\source\repos\Asp.Net\Asp.Net\Asp.Net\obj\Debug\net5.0\Asp.Net.genruntimeconfig.cache
 C:\Users\Администратор\source\repos\Asp.Net\Asp.Net\Asp.Net\obj\Debug\net5.0\Asp.Net.csproj.CopyComplete
+C:\Users\Администратор\source\repos\Asp.Net\Asp.Net\Asp.Net\obj\Debug\net5.0\Razor\Views\Home\Error.cshtml.g.cs

@@ -1,72 +1,46 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
+
 
 namespace Asp.Net.Controllers
 {
     public class HomeController : Controller
     {
-        //Типы файлов
-        //Весь список приведён рядом с папкой проекта
-        //application/msword -> .doc
-        //application/vnd.openxmlformats-officedocument.wordprocessingml.document -> .docx
-        //application/pdf -> pdf
-        //application/octet-stream -> rar
-        //image/png -> png
-        //video/x-flv -> flv
-        //text/plain -> txt
-        //video/mp4 -> mp4
-        //audio/mpeg -> mp3
-        //image/jpeg -> jpg, jpeg
-        //application/zip -> zip,rar
-        [Route("getpng")]
-        public IActionResult GetPng()
+
+        private readonly ITime timeService; 
+        //Передача DI через конструктор
+        public HomeController(ITime timeServ)
         {
-            return PhysicalFile(Path.Combine(Directory.GetCurrentDirectory(), "Files/rem.PNG"), "image/png");
+            timeService = timeServ;
         }
 
-        [Route("rar")]
-        public IActionResult GetRar()
+        public IActionResult Index() //Можно через параметр
         {
-            return PhysicalFile(Path.Combine(Directory.GetCurrentDirectory(), "Files/Open.rar"),"application/zip");
+            return View();
+        }
+        [Route("Sakuya")]
+        public string GetTime([FromServices] ITime time) //Так тоже можно через параметр
+        {
+            //Есть ещё способ вот такой HttpContext.RequestServices.GetService<ITime>();
+            return $"Sakuya time = {time.Time}";
         }
 
-        [Route("txt")]
-        public IActionResult GetTxt()
+        [Route("errorcode")]
+        public IActionResult ErrorCode(string code)
         {
-            return File("~/Files/one.txt", "text/plain", "namefile.txt");
+           return View("Error", code);
         }
-        
 
-        public IActionResult Index() 
-        {
-            return View(); 
-        }
 
         [HttpPost]
-        [Route("Upload")]
-        //ВНИМАНИЕ ЕСЛИ У ТЕБЯ ПРИ КНОПКИ ЗАГРУЗКИ ФАЙЛА  приложение останавливается с кодом -1
-        //Поменяй бразуер я сменил с Яндекса на Оперу и у некоторых работает запуск без отладки но мне не помогло это 
-        public string UploadFiles()
+        public string Index(string[] lang)
         {
-            IFormFileCollection files = Request.Form.Files; //получает коллекцию загруженных файлов
-            var Path = $"{Directory.GetCurrentDirectory()}/uploads";
-            if (!Directory.Exists(Path))
-                Directory.CreateDirectory(Path);
-            foreach (var file in files)
+            string result = "";
+            foreach (var item in lang)
             {
-                // путь к папке с полным имегем файла
-                string fullPath = $"{Path}/{file.FileName}";
-
-                // сохраняем файл в папку uploads
-                using (var fileStream = new FileStream(fullPath, FileMode.Create))
-                {
-                    file.CopyTo(fileStream);
-                }
+                result = $"{result} {item}";
             }
-            return "Все файлы успешно загруженны на сервер";
-
+            return result;
         }
     }
 }
