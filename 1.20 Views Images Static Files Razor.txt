@@ -1,0 +1,124 @@
+Все представления находятся в папке Views и имеют расширение cshtml. Его можно вернуть в контроллере
+View(): для генерации ответа используется представление, которое по имени совпадает с вызывающим методом
+View(string? viewName): в метод передается имя представления, что позволяет переопределить используемое по умолчанию представление
+View(object? model): передает в представление данные в виде объекта model
+View(string? viewName, object? model): переопределяет имя представления и передает в него данные в виде объекта model
+ЕСЛИ ЖЕ ПРЕДСТАВЛЕНИЕ НАХОХИДИТСЯ В ДРУГОЙ ПАПКЕ НЕ В HOME ТО ПИШЕМ ПУТЬ К ФАЙЛУ
+return View("~/Views/Kiaki/Index.cshtml");
+
+БЕЗ ИСПОЛЬЗОВАНИЯ СТАТИЧЕСКИХ ФАЙЛОВ ТЫ НЕ МОЖЕШЬ ПРОПИСАТЬ ПУТЬ К ИЗОБРАЖЕНИЯМ app.UseStaticFiles();
+БЕЗ ИСПОЛЬЗОВАНИЯ СТАТИЧЕСКИХ ФАЙЛОВ ТЫ НЕ МОЖЕШЬ ПРОПИСАТЬ ПУТЬ К ИЗОБРАЖЕНИЯМ app.UseStaticFiles();
+БЕЗ ИСПОЛЬЗОВАНИЯ СТАТИЧЕСКИХ ФАЙЛОВ ТЫ НЕ МОЖЕШЬ ПРОПИСАТЬ ПУТЬ К ИЗОБРАЖЕНИЯМ app.UseStaticFiles();
+БЕЗ ИСПОЛЬЗОВАНИЯ СТАТИЧЕСКИХ ФАЙЛОВ ТЫ НЕ МОЖЕШЬ ПРОПИСАТЬ ПУТЬ К ИЗОБРАЖЕНИЯМ app.UseStaticFiles();
+БЕЗ ИСПОЛЬЗОВАНИЯ СТАТИЧЕСКИХ ФАЙЛОВ ТЫ НЕ МОЖЕШЬ ПРОПИСАТЬ ПУТЬ К ИЗОБРАЖЕНИЯМ app.UseStaticFiles();
+БЕЗ ИСПОЛЬЗОВАНИЯ СТАТИЧЕСКИХ ФАЙЛОВ ТЫ НЕ МОЖЕШЬ ПРОПИСАТЬ ПУТЬ К ИЗОБРАЖЕНИЯМ app.UseStaticFiles();
+
+Создаём папку wwwroot в ней создаём папку Images далее в ней запихиваем картинки
+Создаём папку wwwroot в ней создаём папку Images далее в ней запихиваем картинки
+Создаём папку wwwroot в ней создаём папку Images далее в ней запихиваем картинки
+Создаём папку wwwroot в ней создаём папку Images далее в ней запихиваем картинки
+
+Ну и используем STATIC FILES 
+
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
+namespace Kia
+{
+    public class Startup
+    {
+        // This method gets called by the runtime. Use this method to add services to the container.
+        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddMvc();
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseEndpoints(end => end.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}"));
+        }
+    }
+}
+}
+}
+
+
+
+using Microsoft.AspNetCore.Mvc;
+using System.IO;
+
+namespace Kia.Controllers
+{
+    public class HomeController : Controller
+    {
+        public IActionResult Index()
+        {
+           string[] str =  Directory.GetFiles("wwwroot/Images"); //Начальная директория это папка проекта
+            for (int i = 0; i < str.Length; i++)
+            {
+                str[i] = str[i].Remove(0, str[i].LastIndexOf('\\') + 1); //Возращает полный wwwroot/Images/name.jpg а нужено только name.jpg
+            }
+            return View(str); //Передаём массив названий файлов в представлении
+        }
+    }
+}
+
+
+
+Теперь задача состоит в том как их отобразить в View для этого в Razor есть цикл @foreach (var x in Model) Model в данный момент является массив строк
+Ну для того чтобы использовать язык C# в View достаточно написать @. Если операция занимает несколько строк то @{
+1)
+2)
+3)
+}
+Но если вдруг мы создаем код html, в котором присутствует символ @ не как часть синтаксиса Razor, а сам по себе, то, чтобы его отобразить, нам надо его дублировать:
+
+Если необходимо вывести значение переменной без каких-либо html-элементов, то мы можем использовать специальный снипет <text>:
+
+@{
+    int i = 8;
+    <text>@i</text>
+}
+<text>@(i+1)</text>
+Коментарии делаются вот так @* текст комментария *@
+
+Обычный текст в блоке когда Razor выводится так @: Text
+
+Директива @functions определяет функции которые могут использоватся для html <p> @Sum(2, 1)</b></p>
+
+Теперь вернёмся к задачи
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model string[]
+<html>
+<head>
+
+</head>
+
+<body>
+    <div align="center">
+    @foreach (var x in Model)
+    {
+        <img src='~/Images/@x'>
+    }
+    </div>
+</body>
+</html>
+
+У некоторых возник вопрос почему нельзя было сделать всё логику в представлении. Ответ это нарушает архитектура MVC в View должен быть только показ и никакой логики. Логика делается вся в контроллере
+НИКОГДА НЕ ПИШИТЕ ЛОГИЧЕСКИЙ C# код в представлении Razor. В данном коде просто идёт отображения картинок по заданному пути 
